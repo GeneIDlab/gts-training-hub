@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your GTS Training Hub — GeneID Lab</title>
+<style>
+  :root{
+    --teal:#0F766E; --teal-dark:#134E4A; --teal-tint:#E3F1EE;
+    --purple:#6D28D9; --purple-tint:#EDE4FB;
+    --orange:#C2410C; --orange-tint:#FBE6D8;
+    --navy:#16323D; --ink:#1F2D33; --grey:#647580; --muted:#8A99A0;
+    --line:#E4EAE9; --bg:#F4F6F6; --card:#FFFFFF;
+    --tip-bg:#FEF7DD; --tip-bd:#E2A900; --tip-tx:#8A6D00;
+    --done:#15803D; --done-bg:#E7F4EC;
+    --shadow:0 1px 3px rgba(16,42,53,.06),0 1px 2px rgba(16,42,53,.04);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--bg); color:var(--ink); line-height:1.55;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;}
+  .wrap{max-width:840px; margin:0 auto; padding:0 18px 70px;}
+  a{color:var(--teal);}
+
+  header{background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:#fff; padding:40px 0 30px;}
+  header .wrap{padding-bottom:0;}
+  .eyebrow{font-size:13px; letter-spacing:.08em; text-transform:uppercase; opacity:.9;}
+  header h1{margin:8px 0 6px; font-size:34px; font-weight:800; letter-spacing:-.01em;}
+  header p{margin:0; font-size:16.5px; opacity:.93; max-width:600px;}
+
+  nav.jump{position:sticky; top:0; z-index:20; background:rgba(244,246,246,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  nav.jump .wrap{display:flex; gap:6px; padding-top:0; padding-bottom:0; overflow-x:auto;}
+  nav.jump a{color:var(--grey); font-weight:600; font-size:14px; text-decoration:none; padding:13px 12px; white-space:nowrap; border-bottom:3px solid transparent;}
+  nav.jump a:hover{color:var(--teal); border-bottom-color:var(--teal);}
+
+  .tip{background:var(--tip-bg); border:2px solid var(--tip-bd); border-radius:14px; padding:16px 20px; margin:24px 0 8px;}
+  .tip .h{display:flex; align-items:center; gap:8px; font-weight:700; color:var(--tip-tx); margin-bottom:6px;}
+  .tip p{margin:0; color:#5c4a08;}
+
+  /* progress */
+  .progress{display:flex; align-items:center; gap:16px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; margin:18px 0 6px; box-shadow:var(--shadow);}
+  .progress .ring{flex:0 0 auto; font-weight:800; color:var(--teal-dark); font-size:15px;}
+  .bar{flex:1 1 auto; height:10px; background:var(--teal-tint); border-radius:99px; overflow:hidden;}
+  .bar > i{display:block; height:100%; width:0; background:var(--teal); border-radius:99px; transition:width .35s ease;}
+
+  h2.sec{font-size:22px; color:var(--navy); margin:38px 0 3px; scroll-margin-top:60px;}
+  .sec-sub{color:var(--grey); font-size:14.5px; margin:0 0 16px;}
+
+  .schedule{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;}
+  .sday{background:var(--card); border:1px solid var(--line); border-top:4px solid var(--teal); border-radius:12px; padding:15px; box-shadow:var(--shadow);}
+  .sday:nth-child(2){border-top-color:var(--purple);} .sday:nth-child(3){border-top-color:var(--orange);}
+  .sday .d{font-weight:800; color:var(--navy);} .sday .f{font-weight:600; font-size:13px; color:var(--teal); text-transform:uppercase; letter-spacing:.03em; margin:2px 0 6px;}
+  .sday:nth-child(2) .f{color:var(--purple);} .sday:nth-child(3) .f{color:var(--orange);}
+  .sday .o{color:var(--grey); font-size:13.5px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-left:6px solid var(--teal); border-radius:14px; box-shadow:var(--shadow); padding:18px 20px; margin-bottom:14px;}
+  .card[data-c="purple"]{border-left-color:var(--purple);} .card[data-c="orange"]{border-left-color:var(--orange);}
+  .card h3{margin:0 0 4px; font-size:17.5px; color:var(--navy);}
+  .card .lead{color:var(--grey); font-size:14px; margin:0 0 12px;}
+
+  /* checkable items */
+  .check{display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); cursor:pointer;}
+  .check:last-child{border-bottom:0;}
+  .box{flex:0 0 auto; width:22px; height:22px; border:2px solid var(--teal); border-radius:6px; margin-top:1px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:800; transition:background .15s,border-color .15s;}
+  .check[data-c="purple"] .box{border-color:var(--purple);}
+  .check .ct{flex:1 1 auto;} .check .ct b{color:var(--navy);}
+  .check.done .box{background:var(--done); border-color:var(--done);}
+  .check.done .box::after{content:"\2713";}
+  .check.done .ct{color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line);}
+
+  /* modules */
+  .module{background:var(--card); border:1px solid var(--line); border-left:6px solid var(--teal); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:16px;}
+  .module[data-c="purple"]{border-left-color:var(--purple);}
+  .module-head{display:flex; align-items:center; gap:14px; padding:16px 20px 12px;}
+  .mbadge{flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:var(--teal); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center;}
+  .module[data-c="purple"] .mbadge{background:var(--purple);}
+  .module-head .t{font-weight:700; font-size:17.5px; color:var(--navy);} .module-head .s{font-size:13.5px; color:var(--grey);}
+  .module video{display:block; width:100%; max-height:470px; background:#000;}
+  .module-foot{padding:14px 20px;}
+  .step-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+  .pill-step{font-size:12px; font-weight:700; color:var(--teal); background:var(--teal-tint); padding:3px 10px; border-radius:99px;}
+  .module[data-c="purple"] .pill-step{color:var(--purple); background:var(--purple-tint);}
+  .quiz-btn{display:inline-flex; align-items:center; gap:8px; background:var(--teal); color:#fff; text-decoration:none; font-weight:700; font-size:14px; padding:10px 18px; border-radius:9px;}
+  .module[data-c="purple"] .quiz-btn{background:var(--purple);} .quiz-btn:hover{opacity:.9;}
+  .module-foot .check{border-top:1px solid var(--line); border-bottom:0; padding-top:14px; margin-top:4px;}
+
+  /* resource links */
+  .res{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;}
+  .res a{display:block; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; text-decoration:none; box-shadow:var(--shadow); transition:transform .12s,border-color .12s;}
+  .res a:hover{transform:translateY(-2px); border-color:var(--teal);}
+  .res .rt{font-weight:700; color:var(--navy);} .res .rd{font-size:13px; color:var(--grey); margin-top:2px;}
+
+  .note{border-radius:12px; padding:14px 18px; margin:10px 0 0; font-size:14.5px; background:var(--purple-tint); border-left:5px solid var(--purple);}
+  .note .h{font-weight:700; color:var(--navy); margin-bottom:3px;}
+  ul.plain{margin:6px 0 0; padding-left:20px;} ul.plain li{margin:4px 0;}
+
+  footer{color:var(--muted); font-size:12.5px; text-align:center; padding:30px 0 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">GeneID Lab</div>
+    <h1>Your GTS Training Hub</h1>
+    <p>Welcome to the team! Everything you need for your first few days is right here — work through it top to bottom, and check things off as you go.</p>
+  </div>
+</header>
+
+<nav class="jump">
+  <div class="wrap">
+    <a href="#schedule">Schedule</a>
+    <a href="#setup">Get Set Up</a>
+    <a href="#modules">Training Modules</a>
+    <a href="#roleplay">Role Play</a>
+    <a href="#office">In Office</a>
+    <a href="#resources">Resources</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="tip">
+    <div class="h">&#128075; Before you dive in</div>
+    <p>Find a quiet spot with a strong internet connection and a computer with a working camera. Work through Monday&rsquo;s setup first, then the training modules and quizzes on Tuesday morning, and join the role-play session in the afternoon. We&rsquo;re here to help — reach out anytime in Microsoft Teams.</p>
+  </div>
+
+  <div class="progress">
+    <span class="ring" id="ring">0 of 9 done</span>
+    <div class="bar"><i id="barfill"></i></div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <h2 class="sec" id="schedule">Your first few days</h2>
+  <p class="sec-sub">Here&rsquo;s how the week is laid out.</p>
+  <div class="schedule">
+    <div class="sday"><div class="d">Monday</div><div class="f">Get set up</div><div class="o">Home study + set up your accounts and email. We&rsquo;ll check in between 1&ndash;4 PM EST.</div></div>
+    <div class="sday"><div class="d">Tuesday</div><div class="f">Training + role play</div><div class="o">Morning: watch the modules &amp; take the quizzes. Afternoon: role play on Teams at 1 PM CST.</div></div>
+    <div class="sday"><div class="d">Wednesday</div><div class="f">In office</div><div class="o">You move into the office to start hands-on work with your manager.</div></div>
+  </div>
+
+  <!-- SETUP -->
+  <h2 class="sec" id="setup">Monday — get set up</h2>
+  <p class="sec-sub">Complete these before live training begins on Tuesday.</p>
+
+  <div class="card" data-c="teal">
+    <h3>Home study</h3>
+    <p class="lead">Self-paced on Canvas.</p>
+    <div class="check" data-check="hs1"><span class="box"></span><span class="ct">Complete <b>Compliance &amp; HIPAA</b> training</span></div>
+    <div class="check" data-check="hs2"><span class="box"></span><span class="ct">Complete the <b>3 Canvas quizzes</b></span></div>
+  </div>
+
+  <div class="card" data-c="teal">
+    <h3>Account setup</h3>
+    <p class="lead">Get into every system you&rsquo;ll use day-to-day. Confirm each one works.</p>
+    <div class="check" data-check="as1"><span class="box"></span><span class="ct"><b>GeneID email</b> — set up your @geneidlab.com address on your iPad/device (follow the steps in your setup email)</span></div>
+    <div class="check" data-check="as2"><span class="box"></span><span class="ct"><b>BambooHR</b> — register from your welcome email (the link expires in 24 hrs), create a password, and complete your profile</span></div>
+    <div class="check" data-check="as3"><span class="box"></span><span class="ct"><b>GetGeneID</b> — in Google Chrome, sign in with the credentials emailed to you and confirm your login works</span></div>
+    <div class="check" data-check="as4"><span class="box"></span><span class="ct"><b>Microsoft Teams</b> — download it and sign in with your @geneidlab.com email (this is how we&rsquo;ll stay in touch)</span></div>
+  </div>
+
+  <!-- MODULES -->
+  <h2 class="sec" id="modules">Tuesday morning — training modules</h2>
+  <p class="sec-sub">Watch each video in full, then take its quiz. We&rsquo;ll review the answers together in the afternoon.</p>
+
+  <div class="module" data-c="teal">
+    <div class="module-head"><span class="mbadge">1</span><div><div class="t">Module 1 — Genetic Testing Specialist Training</div><div class="s">Watch in full, then take the quiz</div></div></div>
+    <video controls preload="metadata" src="GTS_Training_Module_1.mp4"></video>
+    <div class="module-foot">
+      <div class="step-row"><span class="pill-step">Step 2 · Quiz</span><a class="quiz-btn" href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMlZCSk5DSk5QSDhIV0Q3UjVWWTJZWVoyWi4u" target="_blank" rel="noopener">Take the Module 1 quiz &#8594;</a></div>
+      <div class="check" data-check="m1"><span class="box"></span><span class="ct">I&rsquo;ve watched Module 1 and completed the quiz</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-c="purple">
+    <div class="module-head"><span class="mbadge">2</span><div><div class="t">Module 2 — Genetic Testing Specialist Training</div><div class="s">Watch in full, then take the quiz</div></div></div>
+    <video controls preload="metadata" src="GTS_Training_Module_2.mp4"></video>
+    <div class="module-foot">
+      <div class="step-row"><span class="pill-step">Step 2 · Quiz</span><a class="quiz-btn" href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMjIxS0lNSFdCUkJZWUhDSFI0MVlLQjVBMS4u" target="_blank" rel="noopener">Take the Module 2 quiz &#8594;</a></div>
+      <div class="check" data-c="purple" data-check="m2"><span class="box"></span><span class="ct">I&rsquo;ve watched Module 2 and completed the quiz</span></div>
+    </div>
+  </div>
+
+  <!-- ROLE PLAY -->
+  <h2 class="sec" id="roleplay">Tuesday afternoon — role play</h2>
+  <div class="card" data-c="purple">
+    <h3>Join us on Teams at 1 PM CST</h3>
+    <p class="lead">A couple of hours together with Monique.</p>
+    <ul class="plain">
+      <li>Practice how to speak to patients, handle objections, and advocate for the patient</li>
+      <li>Hands-on with the Chromebook / Dymo and a review of your quiz answers</li>
+      <li>Q&amp;A and Daily Test Log (DTL) practice so you&rsquo;re ready to start in the office</li>
+      <li>A tour of the GTS Notion site and the GeneID GTS &amp; Sales Team space on Teams</li>
+    </ul>
+    <div class="check" data-c="purple" data-check="rp" style="border-top:1px solid var(--line); margin-top:10px;"><span class="box"></span><span class="ct">I attended the afternoon role-play session</span></div>
+  </div>
+
+  <!-- OFFICE -->
+  <h2 class="sec" id="office">Wednesday — in office</h2>
+  <div class="card" data-c="orange">
+    <h3>You&rsquo;re in the field!</h3>
+    <p class="lead">You&rsquo;ll move into the office to begin hands-on work with your manager. Here&rsquo;s what a screening day looks like once you start:</p>
+    <ul class="plain">
+      <li>Prepare the daily list before clinic</li>
+      <li>If you have access, check the patient&rsquo;s chart in the EMR for previous screening</li>
+      <li>Verify the patient has in-network insurance before screening</li>
+      <li>On BambooHR, clock in on arrival, take breaks, and clock out after UPS drop-off (UPS pick-up is scheduled with Ben)</li>
+      <li>Update the Microsoft Excel Test Log daily</li>
+      <li>Make sure the correct language is in the medical notes for each test type</li>
+      <li>Upload the insurance card and medical notes into GetGeneID</li>
+    </ul>
+    <div class="note"><div class="h">Always keep paper backups</div>Have 3 copies each of the paper requisition and checklist for all tests, in case of any issues with GetGeneID.</div>
+  </div>
+
+  <!-- RESOURCES -->
+  <h2 class="sec" id="resources">Your everyday resources</h2>
+  <p class="sec-sub">Bookmark these — you&rsquo;ll come back to them often. Practice your presentation and GetGeneID screening many times before your first day in the office.</p>
+  <div class="res">
+    <a href="https://genetictestingspecialist.notion.site/GeneID-Genetic-Testing-Specialist-GTS-Onboarding-198c64c99af8809aa4c8f5326a758434" target="_blank" rel="noopener"><div class="rt">GTS Notion Hub &#8599;</div><div class="rd">Your onboarding resources in one place</div></a>
+    <a href="https://geneidlabs.sharepoint.com/sites/GeneIDGTSSalesTeam/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FGeneIDGTSSalesTeam%2FShared%20Documents%2FGeneral%20Info%2FGTS%20Resources&p=true&ga=1" target="_blank" rel="noopener"><div class="rt">GTS Shared Drive &#8599;</div><div class="rd">Core GTS resources on SharePoint</div></a>
+    <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMlZCSk5DSk5QSDhIV0Q3UjVWWTJZWVoyWi4u" target="_blank" rel="noopener"><div class="rt">Module 1 Quiz &#8599;</div><div class="rd">Knowledge check after Module 1</div></a>
+    <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMjIxS0lNSFdCUkJZWUhDSFI0MVlLQjVBMS4u" target="_blank" rel="noopener"><div class="rt">Module 2 Quiz &#8599;</div><div class="rd">Knowledge check after Module 2</div></a>
+  </div>
+
+  <footer>GeneID Lab · GTS Training Hub · We&rsquo;re thrilled to have you on the team!</footer>
+</div>
+
+<script>
+  var KEY='gts_training_progress_v1';
+  var saved={};
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ saved={}; }
+  var items=[].slice.call(document.querySelectorAll('[data-check]'));
+
+  function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){} }
+  function update(){
+    var done=items.filter(function(el){return el.classList.contains('done');}).length;
+    var total=items.length;
+    document.getElementById('ring').textContent=done+' of '+total+' done';
+    document.getElementById('barfill').style.width=(total?Math.round(done/total*100):0)+'%';
+  }
+  items.forEach(function(el){
+    var id=el.getAttribute('data-check');
+    if(saved[id]) el.classList.add('done');
+    el.addEventListener('click', function(){
+      el.classList.toggle('done');
+      saved[id]=el.classList.contains('done');
+      persist(); update();
+    });
+  });
+  update();
+</script>
+</body>
+</html>

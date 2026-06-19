@@ -90,6 +90,13 @@
   .quiz-btn{display:inline-flex; align-items:center; gap:8px; background:var(--teal); color:#fff; text-decoration:none; font-weight:700; font-size:14px; padding:10px 18px; border-radius:9px;}
   .module[data-c="purple"] .quiz-btn{background:var(--purple);} .quiz-btn:hover{opacity:.9;}
   .module-foot .check{border-top:1px solid var(--line); border-bottom:0; padding-top:14px; margin-top:4px;}
+  .module[data-c="orange"]{border-left-color:var(--orange);}
+  .module[data-c="orange"] .mbadge{background:var(--orange);}
+  .module[data-c="orange"] .vthumb{background:linear-gradient(135deg,#5a1e06,var(--orange));}
+  .module[data-c="orange"] .pill-step{color:var(--orange); background:var(--orange-tint);}
+  .module[data-c="orange"] .quiz-btn{background:var(--orange);}
+  .check[data-c="orange"] .box{border-color:var(--orange);}
+  .module .vrow{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:3px; background:var(--card);}
 
   /* resource links */
   .res{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px;}
@@ -188,6 +195,18 @@
     </div>
   </div>
 
+  <div class="module" data-c="orange">
+    <div class="module-head"><span class="mbadge">3</span><div><div class="t">Module 3 — Outreach Team &amp; Collectors</div><div class="s">Watch both videos, then take the quiz</div></div></div>
+    <div class="vrow">
+      <a class="vthumb" href="https://geneidlabs.sharepoint.com/:v:/s/GeneIDInsights/IQBZk1VU1HNoRZnq6f3r6UAsARqPJOXSuOTt4Un5ISwZWuU?e=cXI3ZZ" target="_blank" rel="noopener"><span class="play"></span><span class="vt">Mastering the Patient Journey</span><span class="vs">Opens in SharePoint &middot; sign in with your GeneID account</span></a>
+      <a class="vthumb" href="https://geneidlabs.sharepoint.com/:v:/s/GeneIDInsights/IQBG5pv7FHWlR75YjzISi_TAARw0zqjO1JYsAkVdErL42m8?e=xJhVM1" target="_blank" rel="noopener"><span class="play"></span><span class="vt">Onboarding Workflow</span><span class="vs">Opens in SharePoint &middot; sign in with your GeneID account</span></a>
+    </div>
+    <div class="module-foot">
+      <div class="step-row"><span class="pill-step">Step 2 · Quiz</span><a class="quiz-btn" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-uCK1xOWv3ZKuFanZg1n7NdUNFNEMDVBWkozUlU3WFRQMTBZT1BEWkM1Qy4u" target="_blank" rel="noopener">Take the Module 3 quiz &#8594;</a></div>
+      <div class="check" data-c="orange" data-check="m3"><span class="box"></span><span class="ct">I&rsquo;ve watched both videos and completed the quiz</span></div>
+    </div>
+  </div>
+
   <!-- ROLE PLAY -->
   <h2 class="sec" id="roleplay">Tuesday afternoon — role play</h2>
   <div class="card" data-c="purple">
@@ -227,6 +246,7 @@
     <a href="https://geneidlabs.sharepoint.com/sites/GeneIDGTSSalesTeam/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FGeneIDGTSSalesTeam%2FShared%20Documents%2FGeneral%20Info%2FGTS%20Resources&p=true&ga=1" target="_blank" rel="noopener"><div class="rt">GTS Shared Drive &#8599;</div><div class="rd">Core GTS resources on SharePoint</div></a>
     <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMlZCSk5DSk5QSDhIV0Q3UjVWWTJZWVoyWi4u" target="_blank" rel="noopener"><div class="rt">Module 1 Quiz &#8599;</div><div class="rd">Knowledge check after Module 1</div></a>
     <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-q50MnevxhxNmz_ISTcZY-hUMjIxS0lNSFdCUkJZWUhDSFI0MVlLQjVBMS4u" target="_blank" rel="noopener"><div class="rt">Module 2 Quiz &#8599;</div><div class="rd">Knowledge check after Module 2</div></a>
+    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=OOZpfoquNkOtGQUerRrk-uCK1xOWv3ZKuFanZg1n7NdUNFNEMDVBWkozUlU3WFRQMTBZT1BEWkM1Qy4u" target="_blank" rel="noopener"><div class="rt">Module 3 Quiz &#8599;</div><div class="rd">Outreach Team &amp; Collectors knowledge check</div></a>
   </div>
 
   <footer>GeneID Lab · GTS Training Hub · We&rsquo;re thrilled to have you on the team!</footer>
